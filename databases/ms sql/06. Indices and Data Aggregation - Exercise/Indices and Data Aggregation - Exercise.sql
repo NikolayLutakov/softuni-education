@@ -1,0 +1,20 @@
+--12
+
+DECLARE @SUM DECIMAL(10, 2) = 0
+DECLARE @HOST DECIMAL(10, 2) = 0
+DECLARE @GUEST DECIMAL(10, 2) = 0
+DECLARE db_cursor CURSOR FOR
+	SELECT DepositAmount FROM WizzardDeposits
+OPEN db_cursor
+	FETCH NEXT FROM db_cursor INTO @HOST
+
+WHILE @@FETCH_STATUS = 0 
+BEGIN
+	FETCH NEXT FROM db_cursor INTO @GUEST
+	SET @SUM = (@HOST - @GUEST)
+END
+
+CLOSE db_cursor  
+DEALLOCATE db_cursor 
+
+SELECT @SUM AS SumDifference
