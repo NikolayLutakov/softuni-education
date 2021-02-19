@@ -50,7 +50,7 @@ namespace MiniORM
 
             foreach (var proxyEntity in this.AllEntities)
             {
-                var primaryKeyValues = GetPrimaryKeyValues(primaryKeys, proxyEntity).ToAray();
+                var primaryKeyValues = GetPrimaryKeyValues(primaryKeys, proxyEntity).ToArray();
 
                 var entity = dbSet.Entities.Single(e => GetPrimaryKeyValues(primaryKeys, e).SequenceEqual(primaryKeyValues));
 
@@ -67,7 +67,7 @@ namespace MiniORM
         {
             var clonedEntities = new List<T>();
 
-            var propertiesToClone = typeof(T).GetProperties().Where(pi => DbContext.AllowedSqlTypes.Contains(pi.PropertyType)).ToAray();
+            var propertiesToClone = typeof(T).GetProperties().Where(pi => DbContext.AllowedSqlTypes.Contains(pi.PropertyType)).ToArray();
 
             foreach (var entity in entities)
             {
