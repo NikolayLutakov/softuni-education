@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SoftUni.Data;
 using SoftUni.Models;
+using System;
 using System.Linq;
 using System.Text;
 
@@ -25,6 +26,12 @@ namespace SoftUni
             //Console.WriteLine(GetEmployeesByFirstNameStartingWithSa(context)); //13
             //Console.WriteLine(DeleteProjectById(context)); //14
             //Console.WriteLine(RemoveTown(context)); //15
+
+            //decimal a = 1.345m;
+
+            //Console.WriteLine($"{a:f2}");
+            //Console.WriteLine($"{Math.Round(a, 2)}");
+
 
         }
         public static string RemoveTown(SoftUniContext context)
@@ -102,19 +109,19 @@ namespace SoftUni
             StringBuilder result = new StringBuilder();
 
             //if else only for judge because of wrong test...
-            if (context.Employees.Any(e => e.FirstName == "Svetlin"))
-            {
+            //if (context.Employees.Any(e => e.FirstName == "Svetlin"))
+            //{
                
-                var empl = context.Employees
-                    .Where(employee => employee.FirstName.StartsWith("SA")).ToArray();
+            //    var empl = context.Employees
+            //        .Where(employee => employee.FirstName.StartsWith("SA")).ToArray();
 
-                foreach (var e in empl)
-                {
-                    result.AppendLine($"{e.FirstName} {e.LastName} - {e.JobTitle} - (${e.Salary})");
-                }
-            }
-            else
-            {
+            //    foreach (var e in empl)
+            //    {
+            //        result.AppendLine($"{e.FirstName} {e.LastName} - {e.JobTitle} - (${e.Salary})");
+            //    }
+            //}
+            //else
+            //{
                 var empl = context.Employees
                 .Where(employee => employee.FirstName.ToLower().StartsWith("sa"))
                 //.Where(e => EF.Functions.Like(e.FirstName, "sa%"))
@@ -134,9 +141,10 @@ namespace SoftUni
 
                 foreach (var e in empl)
                 {
+                    //result.AppendLine($"{e.FirstName} {e.LastName} - {e.Job} - (${Math.Round(e.Salary, 2)})");
                     result.AppendLine($"{e.FirstName} {e.LastName} - {e.Job} - (${e.Salary:F2})");
                 }
-            }
+            //}
 
             
 
