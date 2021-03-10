@@ -16,13 +16,13 @@ namespace BookShop
         {
             BookShopContext context = new BookShopContext();
 
-            //DbInitializer.Seed(context);
+            //DbInitializer.ResetDatabase(context);
 
             //Console.WriteLine(GetBooksByAgeRestriction(context, InputReader())); //02
             //Console.WriteLine(GetGoldenBooks(context)); //03
             //Console.WriteLine(GetBooksByPrice(context)); //04
             //Console.WriteLine(GetBooksNotReleasedIn(context, int.Parse(InputReader()))); //05
-            //Console.WriteLine(GetBooksByCategory(context, InputReader())); //06
+            Console.WriteLine(GetBooksByCategory(context, InputReader())); //06
             //Console.WriteLine(GetBooksReleasedBefore(context, InputReader())); //07
             //Console.WriteLine(GetAuthorNamesEndingIn(context, InputReader())); //08
             //Console.WriteLine(GetBookTitlesContaining(context, InputReader())); //09
@@ -32,9 +32,9 @@ namespace BookShop
             //Console.WriteLine(GetTotalProfitByCategory(context)); //13
             //Console.WriteLine(GetMostRecentBooks(context)); //14
             //IncreasePrices(context); //15
-            Console.WriteLine(RemoveBooks(context)); //16
+            //Console.WriteLine(RemoveBooks(context)); //16
 
-
+            
         }
 
         //16
@@ -239,22 +239,24 @@ namespace BookShop
 
             string[] categories = input.Split(" ", StringSplitOptions.RemoveEmptyEntries).Select(s => s.ToLowerInvariant()).ToArray();
 
-            List<string> allBooks = new List<string>();
+            var books = context.BookCategories.Where(b => categories.Contains(b.Category.Name.ToLower())).Select(b => b.Book.Title).OrderBy(b => b).ToList();
 
-            foreach (var category in categories)
-            {
-                var books = context.Books.Where(b => b.BookCategories.Any(bc => bc.Category.Name.ToLower() == category)).Select(b => b.Title).ToList();
+            //List<string> allBooks = new List<string>();
 
-                allBooks.AddRange(books);
-            }
+            //foreach (var category in categories)
+            //{
+            //    var books = context.Books.Where(b => b.BookCategories.Any(bc => bc.Category.Name.ToLower() == category)).Select(b => b.Title).ToList();
 
-            foreach (var book in allBooks.OrderBy(b => b))
-            {
-                result.AppendLine(book);
-            }
+            //    allBooks.AddRange(books);
+            //}
 
+            //foreach (var book in allBooks.OrderBy(b => b))
+            //{
+            //    result.AppendLine(book);
+            //}
+            var result1 = string.Join(Environment.NewLine, books);
 
-            return result.ToString().Trim();
+            return result1.ToString().Trim();
         }
 
         //05
